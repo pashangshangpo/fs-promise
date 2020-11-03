@@ -19,6 +19,9 @@ fs.exists('./test.js').then(console.log)
 ## Functions
 
 <dl>
+<dt><a href="#initDir">initDir(path)</a></dt>
+<dd><p>初始化目录</p>
+</dd>
 <dt><a href="#exists">exists(path)</a></dt>
 <dd><p>判断文件路径是否存在</p>
 </dd>
@@ -33,6 +36,9 @@ fs.exists('./test.js').then(console.log)
 </dd>
 <dt><a href="#readdir">readdir(path)</a></dt>
 <dd><p>读取文件目录</p>
+</dd>
+<dt><a href="#readFilePaths">readFilePaths(dir, filter)</a></dt>
+<dd><p>递归读取目录下符合条件的所有文件</p>
 </dd>
 <dt><a href="#readFile">readFile(path)</a></dt>
 <dd><p>读取文件</p>
@@ -53,6 +59,17 @@ fs.exists('./test.js').then(console.log)
 <dd><p>删除目录</p>
 </dd>
 </dl>
+
+<a name="initDir"></a>
+
+## initDir(path)
+初始化目录
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>String</code> | 目录路径 |
 
 <a name="exists"></a>
 
@@ -110,6 +127,18 @@ fs.exists('./test.js').then(console.log)
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | 文件路径 |
+
+<a name="readFilePaths"></a>
+
+## readFilePaths(dir, filter)
+递归读取目录下符合条件的所有文件
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dir | <code>String</code> | 目录路径 |
+| filter | <code>function</code> | 过滤文件函数 |
 
 <a name="readFile"></a>
 

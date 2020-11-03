@@ -1,5 +1,27 @@
 import Fs from 'fs'
 import Path from 'path'
+import Os from 'os'
+
+/**
+ * 初始化目录
+ * @param {String} path 目录路径
+ */
+const initDir = async path => {
+  const splitLine = Os.platform() === 'win32' ? '\\' : '/'
+  const paths = path.split(splitLine)
+  
+  paths.pop()
+
+  const dir = paths.join(splitLine)
+
+  if (dir) {
+    const isExists = await exists(dir)
+
+    if (!isExists) {
+      await mkdir(dir)
+    }
+  }
+}
 
 /**
  * 判断文件路径是否存在
@@ -31,16 +53,7 @@ const isDir = path => {
  * @param {String|Buffer} content 内容
  */
 const writeFile = async (path, content) => {
-  const paths = path.split('/')
-  
-  paths.pop()
-
-  const dir = paths.join('/')
-  const isExists = await exists(dir)
-
-  if (!isExists) {
-    await mkdir(dir)
-  }
+  await initDir(path)
 
   return new Promise(resolve => {
     Fs.writeFile(path, content, err => {
@@ -55,16 +68,7 @@ const writeFile = async (path, content) => {
  * @param {Object} json JSON数据
  */
 const writeJson = async (path, json) => {
-  const paths = path.split('/')
-  
-  paths.pop()
-
-  const dir = paths.join('/')
-  const isExists = await exists(dir)
-
-  if (!isExists) {
-    await mkdir(dir)
-  }
+  await initDir(path)
 
   return new Promise(resolve => {
     Fs.writeFile(path, JSON.stringify(json), err => {
@@ -159,15 +163,7 @@ const readJson = path => {
  * @param {String} path 目录路径
  */
 const mkdir = async path => {
-  const paths = path.split('/')
-  
-  paths.pop()
-  
-  const isExists = await exists(paths.join('/'))
-
-  if (!isExists) {
-    await mkdir(paths.join('/'))
-  }
+  await initDir(path)
 
   return new Promise(resolve => {
     Fs.mkdir(path, async () => {
