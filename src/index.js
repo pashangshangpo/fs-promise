@@ -67,7 +67,7 @@ const writeJson = async (path, json) => {
   }
 
   return new Promise(resolve => {
-    Fs.writeFile(path, JSON.stringify(json, null, 2), err => {
+    Fs.writeFile(path, JSON.stringify(json), err => {
       resolve(err ? false : true)
     })
   })
