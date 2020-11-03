@@ -2,7 +2,7 @@ const {
   exists,
   isDir,
   writeFile, writeJson,
-  readdir, readFile, readText, readJson,
+  readdir, readFile, readFilePaths, readText, readJson,
   mkdir,
   deleteFile,
   deleteDir
@@ -23,3 +23,5 @@ deleteDir('./demo/a').then(console.log)
 mkdir('./demo/a/b/c/d/e').then(console.log)
 writeFile('./demo/a/b/c', 'Hello World').then(console.log)
 writeJson('./demo/a/b/c/json', { a: 1 })
+
+readFilePaths('./demo').then(console.log)

@@ -86,6 +86,33 @@ const readdir = path => {
 }
 
 /**
+ * 递归读取目录下符合条件的所有文件
+ * @param {String} dir 目录路径
+ * @param {Function} filter 过滤文件函数
+ */
+const readFilePaths = async (dir, filter) => {
+  const files = await readdir(dir)
+  const paths = []
+
+  for (let file of files) {
+      const filePath = Path.join(dir, file)
+
+      if (!(await isDir(filePath))) {
+        if (filter && await filter(filePath) === false) {
+            continue
+        }
+
+        paths.push(filePath)
+        continue
+      }
+
+      paths.push(...(await readFilePaths(filePath, filter)))
+  }
+
+  return paths
+}
+
+/**
  * 读取文件
  * @param {String} path 文件路径
  */
@@ -192,6 +219,7 @@ export {
   writeFile,
   writeJson,
   readdir,
+  readFilePaths,
   readFile,
   readText,
   readJson,
