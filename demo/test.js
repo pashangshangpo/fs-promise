@@ -5,7 +5,8 @@ const {
   readdir, readFile, readFilePaths, readText, readJson,
   mkdir,
   deleteFile,
-  deleteDir
+  deleteDir,
+  copy, copyFile, copyDir
 } = require('../dist/fs-promise')
 
 exists('./demo/test.js').then(console.log)
@@ -25,3 +26,9 @@ writeFile('./demo/a/b/c', 'Hello World').then(console.log)
 writeJson('./demo/a/b/c/json', { a: 1 })
 
 readFilePaths('./demo').then(console.log)
+
+copyFile('demo/test.js', 'demo/aaa/bbb/test3.js')
+
+copyDir('demo', 'aaa')
+
+copy('demo', 'ccc')

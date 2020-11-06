@@ -58,6 +58,15 @@ fs.exists('./test.js').then(console.log)
 <dt><a href="#deleteDir">deleteDir(path)</a></dt>
 <dd><p>删除目录</p>
 </dd>
+<dt><a href="#copyFile">copyFile(sourcePath, targetPath)</a></dt>
+<dd><p>复制源文件到目标文件</p>
+</dd>
+<dt><a href="#copyDir">copyDir(sourcePath, targetPath)</a></dt>
+<dd><p>复制源目录到目标目录</p>
+</dd>
+<dt><a href="#copy">copy(sourcePath, targetPath)</a></dt>
+<dd><p>复制目录或文件到指定目录或文件</p>
+</dd>
 </dl>
 
 <a name="initDir"></a>
@@ -205,4 +214,40 @@ fs.exists('./test.js').then(console.log)
 | Param | Type | Description |
 | --- | --- | --- |
 | path | <code>String</code> | 目录路径 |
+
+<a name="copyFile"></a>
+
+## copyFile(sourcePath, targetPath)
+复制源文件到目标文件
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sourcePath | <code>String</code> | 源文件 |
+| targetPath | <code>String</code> | 目标文件 |
+
+<a name="copyDir"></a>
+
+## copyDir(sourcePath, targetPath)
+复制源目录到目标目录
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sourcePath | <code>String</code> | 源路径 |
+| targetPath | <code>String</code> | 目标路径 |
+
+<a name="copy"></a>
+
+## copy(sourcePath, targetPath)
+复制目录或文件到指定目录或文件
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| sourcePath | <code>String</code> | 源目录或文件路径 |
+| targetPath | <code>String</code> | 目标目录或文件路径 |
 

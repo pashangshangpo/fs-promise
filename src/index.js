@@ -209,6 +209,55 @@ const deleteDir = async path => {
   })
 }
 
+/**
+ * 复制源文件到目标文件
+ * @param {String} sourcePath 源文件
+ * @param {String} targetPath 目标文件
+ */
+const copyFile = async (sourcePath, targetPath) => {
+  await initDir(targetPath)
+
+  return new Promise(resolve => {
+    Fs.copyFile(sourcePath, targetPath, err => {
+      resolve(err ? false : true)
+    })
+  })
+}
+
+/**
+ * 复制源目录到目标目录
+ * @param {String} sourcePath 源路径
+ * @param {String} targetPath 目标路径
+ */
+const copyDir = async (sourcePath, targetPath) => {
+  const files = await readdir(sourcePath)
+
+  for (let name of files) {
+    const filePath = Path.join(sourcePath, name)
+
+    if (await isDir(filePath)) {
+      await mkdir(Path.join(targetPath, name))
+      await copyDir(filePath, Path.join(targetPath, name))
+      continue
+    }
+
+    await copyFile(filePath, Path.join(targetPath, name))
+  }
+}
+
+/**
+ * 复制目录或文件到指定目录或文件
+ * @param {String} sourcePath 源目录或文件路径
+ * @param {String} targetPath 目标目录或文件路径
+ */
+const copy = async (sourcePath, targetPath) => {
+  if (await isDir(sourcePath)) {
+    return copyDir(sourcePath, targetPath)
+  }
+
+  return copyFile(sourcePath, targetPath)
+}
+
 export {
   exists,
   isDir,
@@ -222,4 +271,7 @@ export {
   mkdir,
   deleteDir,
   deleteFile,
+  copy,
+  copyFile,
+  copyDir,
 }

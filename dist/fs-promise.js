@@ -444,6 +444,81 @@ var deleteDir = function (path) {
     return Promise.reject(e);
   }
 };
+/**
+ * 复制源文件到目标文件
+ * @param {String} sourcePath 源文件
+ * @param {String} targetPath 目标文件
+ */
+
+
+var copyFile = function (sourcePath, targetPath) {
+  try {
+    return Promise.resolve(initDir(targetPath)).then(function () {
+      return new Promise(function (resolve) {
+        Fs.copyFile(sourcePath, targetPath, function (err) {
+          resolve(err ? false : true);
+        });
+      });
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+/**
+ * 复制源目录到目标目录
+ * @param {String} sourcePath 源路径
+ * @param {String} targetPath 目标路径
+ */
+
+
+var copyDir = function (sourcePath, targetPath) {
+  try {
+    return Promise.resolve(readdir(sourcePath)).then(function (files) {
+      var _temp12 = _forOf(files, function (name) {
+        var filePath = Path.join(sourcePath, name);
+        return Promise.resolve(isDir(filePath)).then(function (_isDir2) {
+          function _temp11() {
+            return Promise.resolve(copyFile(filePath, Path.join(targetPath, name))).then(function () {});
+          }
+
+          var _temp10 = function () {
+            if (_isDir2) {
+              return Promise.resolve(mkdir(Path.join(targetPath, name))).then(function () {
+                return Promise.resolve(copyDir(filePath, Path.join(targetPath, name))).then(function () {});
+              });
+            }
+          }();
+
+          return _temp10 && _temp10.then ? _temp10.then(_temp11) : _temp11(_temp10);
+        });
+      });
+
+      if (_temp12 && _temp12.then) { return _temp12.then(function () {}); }
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+/**
+ * 复制目录或文件到指定目录或文件
+ * @param {String} sourcePath 源目录或文件路径
+ * @param {String} targetPath 目标目录或文件路径
+ */
+
+
+var copy = function (sourcePath, targetPath) {
+  try {
+    return Promise.resolve(isDir(sourcePath)).then(function (_isDir3) {
+      if (_isDir3) {
+        return copyDir(sourcePath, targetPath);
+      }
+
+      return copyFile(sourcePath, targetPath);
+    });
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
 
 exports.exists = exists;
 exports.isDir = isDir;
@@ -457,3 +532,6 @@ exports.readJson = readJson;
 exports.mkdir = mkdir;
 exports.deleteDir = deleteDir;
 exports.deleteFile = deleteFile;
+exports.copy = copy;
+exports.copyFile = copyFile;
+exports.copyDir = copyDir;
